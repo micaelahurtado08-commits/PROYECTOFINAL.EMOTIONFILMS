@@ -44,7 +44,7 @@ if pagina_seleccionada == "Inicio":
     )
 
     st.markdown(
-        "<h2 style='font-size: 35px; margin-top: 40px;'>¿Qué es Emotionfilms? 🤔</h2>",
+        "<h2 style='font-size: 35px; margin-top: 40px; color: yellow;''>¿Qué es Emotionfilms? 🤔</h2>",
         unsafe_allow_html=True
     )
 
@@ -263,5 +263,6 @@ else:
     map_html = mapa._repr_html_()
     # Mostrar en Streamlit
     html(map_html, height=500)
+
 
 
