@@ -1,7 +1,4 @@
 # EMOTIONFILMS
 Proyecto final 
-Integrantes: 
-Micaela Hurtado Castillo 
-Valeria Esteban Martinez 
-Ivan Gonzales Urcuhuaranga
+Micaela Hurtado Castillo, Valeria Esteban Martinez e Ivan Gonzales Urcuhuaranga
 
