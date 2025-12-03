@@ -8,15 +8,32 @@ from streamlit.components.v1 import html
 base_datos = pd.read_excel("peliculas_mapa.xlsx")
 #st.dataframe(base_datos)
 
-
 # Cargamos nuestra base de datos desde un archivo Excel previamente trabajado
 df = pd.read_excel('peliculasfin.xlsx')
 
 # -------------------- MENÚ DE PÁGINAS --------------------
-# Definimos las dos secciones principales de la página: presentación y encuesta
 # Dividir la página
 lista_secciones = ["Inicio", "Películas", "Juegos", "Mapa"]
-pagina_seleccionada = st.sidebar.selectbox("Selecciona una sección", lista_secciones)
+
+with st.sidebar:
+    pagina_seleccionada = st.selectbox("Selecciona una sección", lista_secciones)
+
+    if pagina_seleccionada == "Inicio":
+        st.markdown("### 🏠 Estás en Inicio")
+        st.write("Bienvenido a Emotionfilms 🎬")
+
+    elif pagina_seleccionada == "Películas":
+        st.markdown("### 🍿 Filtros disponibles")
+        st.write("Puedes filtrar por emoción y duración.")
+        st.write("Luego califica tus películas ⭐")
+
+    elif pagina_seleccionada == "Juegos":
+        st.markdown("### 🎮 Modo Juego")
+        st.write("Prepárate para adivinar películas 👀")
+
+    elif pagina_seleccionada == "Mapa":
+        st.markdown("### 🌍 Mapa de Producciones")
+        st.write("Descubre dónde fueron grabadas tus películas favoritas")
 
 # -------------------- PÁGINA DE PRESENTACIÓN --------------------
 
@@ -29,7 +46,7 @@ pagina_seleccionada = st.sidebar.selectbox("Selecciona una sección", lista_secc
 if pagina_seleccionada == "Inicio":
 
     # ---------- TÍTULO PRINCIPAL ----------
-    st.markdown("<h1 style='text-align: center; font-size: 50px; color: yellow;''>🎬 EMOTIONFILMS 🎬</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; font-size: 50px;'>🎬 EMOTIONFILMS 🎬</h1>", unsafe_allow_html=True)
 
     # ---------- TEXTO DE PRESENTACIÓN ----------
     texto = (
@@ -44,7 +61,7 @@ if pagina_seleccionada == "Inicio":
     )
 
     st.markdown(
-        "<h2 style='font-size: 35px; margin-top: 40px; color: yellow;''>¿Qué es Emotionfilms? 🤔</h2>",
+        "<h2 style='font-size: 35px; margin-top: 40px;'>¿Qué es Emotionfilms? 🤔</h2>",
         unsafe_allow_html=True
     )
 
@@ -64,7 +81,7 @@ if pagina_seleccionada == "Inicio":
         st.image("imagen1.jpg", use_container_width=True)  
 
     st.markdown(
-        "<h2 style='font-size: 35px; margin-top: 40px; color: yellow;''>¿Por qué creamos Emotionfilms? 🎥</h2>",
+        "<h2 style='font-size: 35px; margin-top: 40px;'>¿Por qué creamos Emotionfilms? 🎥</h2>",
         unsafe_allow_html=True
     )
 
@@ -127,11 +144,11 @@ elif pagina_seleccionada == "Películas":
     # --- APLICAR FILTRO ---
     df_filtrado = df[filtro]
 
-    # Mostrar resultados
+    #Mostrar resultados
     if df_filtrado.empty:
         st.warning("No se encontraron películas con esos filtros 😢")
     else:
-        cols = st.columns(2) # Dividir en dos columnas
+        cols = st.columns(2) #Dividir en dos columnas
         col_idx = 0
 
         for idx, row in df_filtrado.iterrows():
@@ -140,14 +157,14 @@ elif pagina_seleccionada == "Películas":
 
                 col_img, col_info = st.columns([1, 3])
 
-                # Portada
+                #Portada
                 with col_img:
                     if pd.notna(row["Cover"]) and str(row["Cover"]).strip() != "":
                         st.image(row["Cover"], width=150)
                     else:
                         st.write("Sin imagen")
 
-                # Info
+                #Info
                 with col_info:
                     st.markdown(f"{row['Nombre']}")
                     st.write(f"**Año:** {row['Año']} • **Duración:** {row['Duración']}")
@@ -158,7 +175,17 @@ elif pagina_seleccionada == "Películas":
                     # Links
                     if pd.notna(row["Trailer"]):
                         st.markdown(f"[Ver tráiler]({row['Trailer']})")
-            col_idx = (col_idx + 1) % 2
+            
+                # --- Calificación con estrellas (no se guarda) ---
+                opciones_estrellas = ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"]
+                calificacion = st.radio(
+                    "Califica esta película ⭐",
+                    opciones_estrellas,
+                    key=f"stars_{idx}"
+                )
+                st.write(f"Tu calificación: {calificacion}")
+
+        col_idx = (col_idx + 1) % 2
             
 # -------------------- PÁGINA DE JUEGOS --------------------
 elif pagina_seleccionada == "Juegos":
@@ -170,21 +197,20 @@ elif pagina_seleccionada == "Juegos":
         if "pelicula" not in st.session_state:
             titulo = random.choice(df["Nombre"])
     
-            # Convertimos el título a mayúsculas
+            #Convertimos el título a mayúsculas
             st.session_state.pelicula = titulo.upper()
 
-            # Convertimos letras con tilde para que coincidan con el input del usuario
+            #Convertimos letras con tilde para que coincidan con el input del usuario
             reemplazos = str.maketrans("ÁÉÍÓÚÑ", "AEIOUN")
             st.session_state.pelicula_normalizada = st.session_state.pelicula.translate(reemplazos)
 
-            # Progreso con guiones, pero manteniendo espacios tal cual
+            #Progreso con guiones, pero manteniendo espacios tal cual
             st.session_state.progreso = [
                 "_" if letra.isalpha() else letra
                 for letra in st.session_state.pelicula
             ]
             st.session_state.vidas = 6
             st.session_state.letras_intentadas = []
-
 
         st.subheader("🎮 Ahorcado de Películas")
 
@@ -238,7 +264,7 @@ elif pagina_seleccionada == "Juegos":
 
 else: 
     titulo = "¿SABES DÓNDE SE HICIERON LAS PELÍCULAS? ENTÉRATE ACÁ 🌍"
-    st.markdown(f"<h1 style='text-align: center; font-size: 40px; color: yellow;''>{titulo}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; font-size: 40px;'>{titulo}</h1>", unsafe_allow_html=True)
 
     mapa = folium.Map(location=[20,0], zoom_start=2)
 
@@ -263,8 +289,5 @@ else:
     map_html = mapa._repr_html_()
     # Mostrar en Streamlit
     html(map_html, height=500)
-
-
-
 
 
