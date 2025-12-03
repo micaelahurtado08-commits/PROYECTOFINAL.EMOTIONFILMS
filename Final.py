@@ -33,7 +33,7 @@ with st.sidebar:
 
     elif pagina_seleccionada == "Mapa":
         st.markdown("### 🌍 Mapa de Producciones")
-        st.write("Descubre dónde fueron grabadas tus películas favoritas")
+        st.write("Descubre las locaciones de tus películas favoritas: ¡Haz clic en los íconos!")
 
 # -------------------- PÁGINA DE PRESENTACIÓN --------------------
 
