@@ -29,7 +29,7 @@ pagina_seleccionada = st.sidebar.selectbox("Selecciona una sección", lista_secc
 if pagina_seleccionada == "Inicio":
 
     # ---------- TÍTULO PRINCIPAL ----------
-    st.markdown("<h1 style='text-align: center; font-size: 50px;'>🎬 EMOTIONFILMS 🎬</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; font-size: 50px; color: yellow;''>🎬 EMOTIONFILMS 🎬</h1>", unsafe_allow_html=True)
 
     # ---------- TEXTO DE PRESENTACIÓN ----------
     texto = (
@@ -263,6 +263,7 @@ else:
     map_html = mapa._repr_html_()
     # Mostrar en Streamlit
     html(map_html, height=500)
+
 
 
 
