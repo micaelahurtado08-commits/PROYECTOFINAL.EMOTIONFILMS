@@ -64,7 +64,7 @@ if pagina_seleccionada == "Inicio":
         st.image("imagen1.jpg", use_container_width=True)  
 
     st.markdown(
-        "<h2 style='font-size: 35px; margin-top: 40px;'>¿Por qué creamos Emotionfilms? 🎥</h2>",
+        "<h2 style='font-size: 35px; margin-top: 40px; color: yellow;''>¿Por qué creamos Emotionfilms? 🎥</h2>",
         unsafe_allow_html=True
     )
 
@@ -238,7 +238,7 @@ elif pagina_seleccionada == "Juegos":
 
 else: 
     titulo = "¿SABES DÓNDE SE HICIERON LAS PELÍCULAS? ENTÉRATE ACÁ 🌍"
-    st.markdown(f"<h1 style='text-align: center; font-size: 40px;'>{titulo}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; font-size: 40px; color: yellow;''>{titulo}</h1>", unsafe_allow_html=True)
 
     mapa = folium.Map(location=[20,0], zoom_start=2)
 
@@ -263,6 +263,7 @@ else:
     map_html = mapa._repr_html_()
     # Mostrar en Streamlit
     html(map_html, height=500)
+
 
 
 
