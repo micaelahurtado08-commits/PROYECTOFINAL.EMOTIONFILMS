@@ -16,7 +16,7 @@ df = pd.read_excel('peliculasfin.xlsx')
 # -------------------- MENÚ DE PÁGINAS --------------------
 # Definimos las dos secciones principales de la página: presentación y encuesta
 # Dividir la página
-lista_secciones = ["Inicio", "¿Qué quieres ver?", "Juegos", "Mapa"]
+lista_secciones = ["Inicio", "Películas", "Juegos", "Mapa"]
 pagina_seleccionada = st.sidebar.selectbox("Selecciona una sección", lista_secciones)
 
 # -------------------- PÁGINA DE PRESENTACIÓN --------------------
@@ -85,7 +85,9 @@ if pagina_seleccionada == "Inicio":
         st.image("imagen3.jpeg", use_container_width=True)  
 
 # -------------------- PÁGINA DE PELÍCULAS --------------------
-elif pagina_seleccionada == "¿Qué quieres ver?":
+elif pagina_seleccionada == "Películas":
+    # Título de la página
+    st.title("¿Qué quieres ver hoy?🍿")
 
     # Cargar base de datos
     df = pd.read_excel("peliculasfin.xlsx")
